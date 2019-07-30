@@ -1,25 +1,96 @@
-/* const Person = require("./person.js"); */
+const http = require("http");
+const path = require("path");
+const fs = require("fs");
 
-/* import Person from "./person.js";
-// => 'Unexpected identifier': Node hasn't implemented ES6 modules yet */
+const server = http.createServer((req, res) => {
+  /* switch (req.url) {
+    case "/":
+      fs.readFile(
+        path.join(__dirname, "/public", "index.html"),
+        "utf8",
+        (err, content) => {
+          if (err) throw err;
+          resp.writeHead(200, { "Content-Type": "text/html" });
+          resp.end(content);
+        }
+      );
 
-/* const person1 = new Person("Philippe", 28);
+    case "/api/users":
+      const users = [
+        {
+          name: "Bob Smith",
+          age: 40
+        },
+        {
+          name: "Philippe Peelman",
+          age: 29
+        }
+      ];
 
-person1.greeting();
- */
+      resp.writeHead(200, { "Content-Type": "application/json" });
+      resp.end(JSON.stringify(users));
+  } */
 
-const Logger = require("./logger");
+  // Build file path
+  let filePath = path.join(
+    __dirname,
+    "public",
+    req.url === "/" ? "index.html" : req.url
+  );
 
-// Create an instance of the Logger class
-const logger = new Logger();
+  // Extension of file
+  let extname = path.extname(filePath);
 
-// Set up a callback for the 'message' event
-logger.on("message", data => {
-  console.log("Called listener: ", data);
+  // Initial content type
+  let contentType = "text/html";
+
+  // Check ext and set content type
+  switch (extname) {
+    case ".js":
+      contentType = "text/javascript";
+      break;
+    case ".css":
+      contentType = "text/css";
+      break;
+    case ".json":
+      contentType = "application/json";
+      break;
+    case ".png":
+      contentType = "image/png";
+      break;
+    case ".jpg":
+      contentType = "image/jpg";
+      break;
+  }
+
+  // Read file
+  fs.readFile(filePath, "utf8", (err, content) => {
+    if (err) {
+      if (err.code == "ENOENT") {
+        // Page not found
+        fs.readFile(
+          path.join(__dirname, "public", "404.html"),
+          "utf8",
+          (err, content) => {
+            res.writeHead(200, { "Content-Type": contentType });
+            res.end(content, "utf8");
+          }
+        );
+      } else {
+        // Some server error
+        res.writeHead(500);
+        res.end(`Server error: ${err.code}`);
+      }
+    } else {
+      res.writeHead(200, { "Content-Type": contentType });
+      res.end(content, "utf8");
+    }
+  });
 });
 
-// Emit an event (using the log method that extends the emit method)
-logger.log("Hello world");
-logger.log("Hello world 2");
-logger.log("Hello world 3");
-logger.log("Hello world 4");
+// The host decides the port on which the server will run, which is stored in an environmental variable
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

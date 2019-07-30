@@ -1,8 +1,4 @@
-# Course
-
-`npm init`
-
-`git init`
+# Node
 
 `node`  
 REPL: Read-Eval-Print-Loop  
@@ -82,6 +78,15 @@ Much of the Node.js core API is built around an idiomatic asynchronous event-dri
 **HTTP** module: https://nodejs.org/api/http.html
 
 Node core modules don't have to be installed via npm and can be imported using the module name only (require('path')).
+
+# Heroku
+
+1. Create an account on http://www.heroku.com
+2. Install Heroku CLI on https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+3. Restart Visual Studio Code
+4. Login to Heroku on the command line, by typing `heroku login`
+5. Make sure that the directory is under Git version control
+6. `heroku create`
 
 # Miscellaneous learned
 
