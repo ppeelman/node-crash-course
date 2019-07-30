@@ -71,7 +71,15 @@ Node hasn't implemented ES6 modules yet, you need to use Babel to use ES6 module
 
 Documentation: https://nodejs.org/dist/latest-v12.x/docs/api/
 
-**Path** module: https://nodejs.org/dist/latest-v12.x/docs/api/path.html
+**Path** module: https://nodejs.org/dist/latest-v12.x/docs/api/path.html  
+**File System** module: https://nodejs.org/api/fs.html  
+**Operating System** module: https://nodejs.org/api/os.html  
+**URL** module: https://nodejs.org/api/url.html
+
+**Events** module: https://nodejs.org/api/events.html  
+Much of the Node.js core API is built around an idiomatic asynchronous event-driven architecture in which certain kinds of objects (called "emitters") emit named events that cause Function objects ("listeners") to be called.
+
+**HTTP** module: https://nodejs.org/api/http.html
 
 Node core modules don't have to be installed via npm and can be imported using the module name only (require('path')).
 
